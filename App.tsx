@@ -16,41 +16,45 @@ import theme from "./src/themes/default";
 type Theme = typeof theme;
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
+//Screens
+import HomeScr from "./src/screens/HomeScr";
 
 const Card = createRestyleComponent<
   VariantProps<Theme, "cardVariants"> & React.ComponentProps<typeof Box>,
   Theme
 >([createVariant({ themeKey: "cardVariants" })], Box);
 
-export default function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Box backgroundColor="mainBackground" flexGrow={1}>
-        <Box paddingTop="xl" paddingLeft="m">
-          <Text variant="header">Welcome</Text>
-        </Box>
-        <Box padding="l" flexGrow={1}>
-          <Card
-            margin="s"
-            variant="primary"
-            backgroundColor="primaryCardBackground"
-          >
-            <Text color="primaryCardText">Card #1</Text>
-          </Card>
-          <Card
-            margin="s"
-            variant="primary"
-            backgroundColor="secondaryCardBackground"
-          >
-            <Text color="secondaryCardText">Card #2</Text>
-          </Card>
-        </Box>
-        <Box padding="s">
-          <Text>Footer text</Text>
-        </Box>
+const themeShowcase = (
+  <ThemeProvider theme={theme}>
+    <Box backgroundColor="mainBackground" flexGrow={1}>
+      <Box paddingTop="xl" paddingLeft="m">
+        <Text variant="header">Welcome</Text>
       </Box>
-    </ThemeProvider>
-  );
+      <Box padding="l" flexGrow={1}>
+        <Card
+          margin="s"
+          variant="primary"
+          backgroundColor="primaryCardBackground"
+        >
+          <Text color="primaryCardText">Card #1</Text>
+        </Card>
+        <Card
+          margin="s"
+          variant="primary"
+          backgroundColor="secondaryCardBackground"
+        >
+          <Text color="secondaryCardText">Card #2</Text>
+        </Card>
+      </Box>
+      <Box padding="s">
+        <Text>Footer text</Text>
+      </Box>
+    </Box>
+  </ThemeProvider>
+);
+
+export default function App() {
+  return <HomeScr />;
 }
 
 const styles = StyleSheet.create({

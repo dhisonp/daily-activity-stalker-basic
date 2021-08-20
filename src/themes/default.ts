@@ -28,6 +28,8 @@ const theme = createTheme({
     primaryCardText: palette.white,
     secondaryCardText: palette.black,
     headerTextColor: palette.darkGray,
+
+    buttonColor: palette.purpleLight,
   },
   breakpoints: {},
   textVariants: {
