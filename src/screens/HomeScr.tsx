@@ -9,7 +9,7 @@ import Text from "../components/Text";
 import CircleButton from "../components/CircleButton";
 
 export default function HomeScr() {
-  const buttonSize = 120;
+  const buttonSize = 160;
 
   const update = () => {
     alert("Update!");
@@ -21,15 +21,23 @@ export default function HomeScr() {
         key="mainContainer"
         backgroundColor="mainBackground"
         flexGrow={1}
-        justifyContent="center"
+        justifyContent="space-evenly"
         alignItems="center"
       >
-        <CircleButton
-          backgroundColor="buttonColor"
-          radius={buttonSize}
-          onPress={update}
-          label="Button!"
-        />
+        <Box flexGrow={2} />
+        <Box flexGrow={5} justifyContent="center" alignItems="center">
+          <CircleButton
+            backgroundColor="buttonColor"
+            radius={buttonSize}
+            onPress={update}
+            label="Act!"
+          />
+        </Box>
+        <Box flex={2} width="100%" justifyContent='space-around' alignItems='center'>
+          <Box backgroundColor='textInput' width="70%" padding='m' borderRadius={6}>
+            <Text>Activity name</Text>
+          </Box>
+        </Box>
       </Box>
     </ThemeProvider>
   );
