@@ -4,13 +4,16 @@ import { TouchableOpacity, View } from "react-native";
 //Themes
 import { ThemeProvider, createBox, createText } from "@shopify/restyle";
 import theme from "../themes/default";
-
-type Theme = typeof theme;
-const Box = createBox<Theme>();
-const Text = createText<Theme>();
+import Box from "../components/Box";
+import Text from "../components/Text";
+import CircleButton from "../components/CircleButton";
 
 export default function HomeScr() {
   const buttonSize = 120;
+
+  const update = () => {
+    alert("Update!");
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -21,19 +24,12 @@ export default function HomeScr() {
         justifyContent="center"
         alignItems="center"
       >
-        <Box
-          key="circle"
+        <CircleButton
           backgroundColor="buttonColor"
-          justifyContent="center"
-          alignItems="center"
-          width={buttonSize}
-          height={buttonSize}
-          borderRadius={buttonSize / 2}
-        >
-          <Text>
-            Start!
-          </Text>
-        </Box>
+          radius={buttonSize}
+          onPress={update}
+          label="Button!"
+        />
       </Box>
     </ThemeProvider>
   );

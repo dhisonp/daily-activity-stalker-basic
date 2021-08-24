@@ -24,35 +24,6 @@ const Card = createRestyleComponent<
   Theme
 >([createVariant({ themeKey: "cardVariants" })], Box);
 
-const themeShowcase = (
-  <ThemeProvider theme={theme}>
-    <Box backgroundColor="mainBackground" flexGrow={1}>
-      <Box paddingTop="xl" paddingLeft="m">
-        <Text variant="header">Welcome</Text>
-      </Box>
-      <Box padding="l" flexGrow={1}>
-        <Card
-          margin="s"
-          variant="primary"
-          backgroundColor="primaryCardBackground"
-        >
-          <Text color="primaryCardText">Card #1</Text>
-        </Card>
-        <Card
-          margin="s"
-          variant="primary"
-          backgroundColor="secondaryCardBackground"
-        >
-          <Text color="secondaryCardText">Card #2</Text>
-        </Card>
-      </Box>
-      <Box padding="s">
-        <Text>Footer text</Text>
-      </Box>
-    </Box>
-  </ThemeProvider>
-);
-
 export default function App() {
   return <HomeScr />;
 }
