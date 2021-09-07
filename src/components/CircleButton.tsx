@@ -37,8 +37,11 @@ const CircleButton = ({ onPress, label, radius, ...rest }: Props) => {
           alignItems: "center",
           justifyContent: "center",
         }}
+        onPress={onPress}
       >
-        <Text fontSize={24} fontWeight='bold' color="primaryCardText">{label}</Text>
+        <Text fontSize={24} fontWeight="bold" color="primaryCardText">
+          {label}
+        </Text>
       </TouchableOpacity>
     </Box>
   );
