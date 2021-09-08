@@ -18,11 +18,9 @@ const Box = createBox<Theme>();
 const Text = createText<Theme>();
 //Screens
 import HomeScr from "./src/screens/HomeScr";
-
-const Card = createRestyleComponent<
-  VariantProps<Theme, "cardVariants"> & React.ComponentProps<typeof Box>,
-  Theme
->([createVariant({ themeKey: "cardVariants" })], Box);
+//Firebase
+import fbInit from "./src/db/firebase";
+fbInit();
 
 export default function App() {
   return <HomeScr />;

@@ -15,26 +15,36 @@ import Text from "../components/Text";
 import CircleButton from "../components/CircleButton";
 import TextInput from "../components/TextInput";
 //System/Db
-import fbInit, { setCurrentAct, getCurrentAct } from "../db/firebase";
-
-fbInit();
+import { setCurrentAct, getCurrentAct } from "../db/firebase";
+require("@firebase/database");
 
 export default function HomeScr() {
-  var [activityLabel, updateActivityLabel] = React.useState("");
-  var [currentAct, updateAct] = React.useState("Placeholder act");
+  var [activityLabelInput, updateActivityLabel] = React.useState("");
+  var [currentAct, updateAct] = React.useState("...loading");
+
+  React.useEffect(() => {
+    //use async? how the f do you do this? problem since 2019 jesus
+    let x = "";
+    try {
+      x = getCurrentAct()!;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      updateAct(x);
+      console.log(`Current act fetched on launch: ${x}`);
+    }
+  }, []);
 
   const buttonSize = 160;
 
   const update = () => {
     try {
-      setCurrentAct(currentAct);
+      updateAct(activityLabelInput);
+      setCurrentAct(activityLabelInput);
     } catch (err) {
       console.log(err);
     }
-
-    //Implement exception handling (try/catch)
     Keyboard.dismiss();
-    updateAct(activityLabel);
   };
 
   const onChangeText = (text: string) => {
@@ -73,7 +83,7 @@ export default function HomeScr() {
             >
               <Text>Current act:</Text>
               <Text>{currentAct}</Text>
-              <Button title="debug" onPress={debug} />
+              {/* <Button title="debug" onPress={debug} /> */}
             </Box>
             <Box justifyContent="center" alignItems="center" height="40%">
               <CircleButton
@@ -86,7 +96,7 @@ export default function HomeScr() {
             <Box width="100%" alignItems="center">
               <TextInput
                 onChangeText={onChangeText}
-                value={activityLabel}
+                value={activityLabelInput}
                 placeholder="Placeholder"
                 multiline
               />

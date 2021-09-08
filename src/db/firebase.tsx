@@ -15,9 +15,13 @@ const currActRef = "app/currentAct";
 
 const fbInit = () => {
   try {
-    firebase.initializeApp(firebaseConfig);
+    !firebase.apps.length
+      ? firebase.initializeApp(firebaseConfig)
+      : firebase.app();
   } catch (err) {
     console.log(err);
+  } finally {
+    console.log("Database initialized.");
   }
 };
 
@@ -28,16 +32,17 @@ export const getCurrentAct = () => {
       .database()
       .ref(currActRef)
       .on("value", (snapshot) => {
-        act = snapshot.val();
+        act = snapshot.child("name").val();
       });
   } catch (err) {
     console.log(err);
+    act = "error fetching act";
   } finally {
     return act;
   }
 };
 
-export const setCurrentAct = (actName) => {
+export const setCurrentAct = (actName: string) => {
   //add timestamp, etc. params
   try {
     firebase.database().ref(currActRef).set({
