@@ -1,12 +1,11 @@
 //React
 import React, { Component } from "react";
 import {
-  TouchableOpacity,
-  View,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  Button,
 } from "react-native";
 //Themes
 import { ThemeProvider, createBox, createText } from "@shopify/restyle";
@@ -15,6 +14,10 @@ import Box from "../components/Box";
 import Text from "../components/Text";
 import CircleButton from "../components/CircleButton";
 import TextInput from "../components/TextInput";
+//System/Db
+import fbInit, { setCurrentAct, getCurrentAct } from "../db/firebase";
+
+fbInit();
 
 export default function HomeScr() {
   var [activityLabel, updateActivityLabel] = React.useState("");
@@ -23,6 +26,12 @@ export default function HomeScr() {
   const buttonSize = 160;
 
   const update = () => {
+    try {
+      setCurrentAct(currentAct);
+    } catch (err) {
+      console.log(err);
+    }
+
     //Implement exception handling (try/catch)
     Keyboard.dismiss();
     updateAct(activityLabel);
@@ -30,6 +39,17 @@ export default function HomeScr() {
 
   const onChangeText = (text: string) => {
     updateActivityLabel(text);
+  };
+
+  const debug = () => {
+    var x;
+    try {
+      x = getCurrentAct();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log(x);
+    }
   };
 
   return (
@@ -53,6 +73,7 @@ export default function HomeScr() {
             >
               <Text>Current act:</Text>
               <Text>{currentAct}</Text>
+              <Button title="debug" onPress={debug} />
             </Box>
             <Box justifyContent="center" alignItems="center" height="40%">
               <CircleButton
