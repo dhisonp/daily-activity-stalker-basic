@@ -19,7 +19,7 @@ const Text = createText<Theme>();
 //Screens
 import HomeScr from "./src/screens/HomeScr";
 //Firebase
-import fbInit from "./src/db/firebase";
+import fbInit, { getCurrentAct } from "./src/db/firebase";
 fbInit();
 
 export default function App() {

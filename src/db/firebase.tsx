@@ -26,19 +26,18 @@ const fbInit = () => {
 };
 
 export const getCurrentAct = () => {
-  var act;
+  var act = "";
   try {
     firebase
       .database()
       .ref(currActRef)
       .on("value", (snapshot) => {
-        act = snapshot.child("name").val();
+        act += snapshot.child("name").val();
+        console.log("Act retrived: " + act)
       });
   } catch (err) {
     console.log(err);
     act = "error fetching act";
-  } finally {
-    return act;
   }
 };
 
