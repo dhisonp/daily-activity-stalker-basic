@@ -29,6 +29,7 @@ export default function HomeScr() {
       let x = "";
       const ref = firebase.database().ref("app/currentAct");
       ref.on("value", (snapshot) => {
+        //this acts like some sort of event listener, bro
         let data = snapshot.child("name").val();
         x += data;
         updateAct(x);
@@ -38,16 +39,33 @@ export default function HomeScr() {
     }
   };
 
+  const getTimestamp = () => {
+    return new Date().toISOString();
+    //to convert back to Date object, use new Date('ISOSTRING')
+  };
+
   React.useEffect(() => {
     getAct();
   }, [currentAct]);
 
   const buttonSize = 160;
 
+  const firebaseUpdateCurrAct = () => {
+    updateAct(activityLabelInput);
+    setCurrentAct(activityLabelInput, getTimestamp());
+  };
+
   const update = () => {
     try {
-      updateAct(activityLabelInput);
-      setCurrentAct(activityLabelInput);
+      const ref = firebase.database().ref("app/currentAct");
+      ref.get().then((snapshot) => {
+        if (snapshot.exists()) {
+          firebase.database().ref("app/pastActs/").push(snapshot.val());
+          firebaseUpdateCurrAct();
+        } else {
+          firebaseUpdateCurrAct();
+        }
+      });
     } catch (err) {
       console.log(err);
     }
@@ -68,6 +86,8 @@ export default function HomeScr() {
       console.log(x);
     }
   };
+
+  const date = new Date().toLocaleString();
 
   if (currentAct === "") {
     return (
@@ -97,6 +117,7 @@ export default function HomeScr() {
               >
                 <Text>Current act:</Text>
                 <Text>{currentAct}</Text>
+                <Text>Current date: {date}</Text>
                 {/* <Button title="debug" onPress={debug} /> */}
               </Box>
               <Box justifyContent="center" alignItems="center" height="40%">

@@ -41,11 +41,12 @@ export const getCurrentAct = () => {
   }
 };
 
-export const setCurrentAct = (actName: string) => {
+export const setCurrentAct = (actName: string, timestamp:string) => {
   //add timestamp, etc. params
   try {
     firebase.database().ref(currActRef).set({
       name: actName,
+      timestamp: timestamp,
     });
   } catch (error) {
     console.log(error);
