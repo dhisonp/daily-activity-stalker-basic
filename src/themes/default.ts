@@ -1,6 +1,6 @@
 import { createTheme, spacing } from "@shopify/restyle";
 import { ThemeContext } from "@shopify/restyle/dist/context";
-const palette = {
+export const palette = {
   purpleLight: "#C7B7FF",
   purple: "#5A31F4",
   purpleDark: "#3F22AB",
@@ -8,11 +8,12 @@ const palette = {
   green: "#0ECD9D",
   greenDark: "#0A906E",
   black: "#0B0B0B",
-  white: "#F0F2F3",
+  white: "#FDFEFF",
   darkGray: "#333",
   lightGray: "#EEE",
-  gray: '#d9d4d9',
+  gray: "#d9d4d9",
 };
+export const borderRadius = 4;
 const theme = createTheme({
   spacing: {
     s: 8,
@@ -21,7 +22,7 @@ const theme = createTheme({
     xl: 48,
   },
   colors: {
-    mainBackground: palette.lightGray,
+    mainBackground: palette.white,
     mainForeground: palette.black,
 
     primaryCardBackground: palette.purple,
@@ -31,6 +32,7 @@ const theme = createTheme({
     headerTextColor: palette.darkGray,
 
     buttonColor: palette.purpleLight,
+    buttonBorderColor: palette.gray,
     textInput: palette.gray,
 
     debug: palette.green,
@@ -45,6 +47,12 @@ const theme = createTheme({
     header: {
       fontSize: 32,
       lineHeight: 30,
+      color: "headerTextColor",
+      fontWeight: "bold",
+    },
+    subheader: {
+      fontSize: 24,
+      lineHeight: 24,
       color: "headerTextColor",
       fontWeight: "bold",
     },

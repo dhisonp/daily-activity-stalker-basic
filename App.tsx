@@ -20,10 +20,16 @@ const Text = createText<Theme>();
 import HomeScr from "./src/screens/HomeScr";
 //Firebase
 import fbInit, { getCurrentAct } from "./src/db/firebase";
+import Navigation from "./src/navigation/Navigation";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 fbInit();
 
 export default function App() {
-  return <HomeScr />;
+  return (
+    <SafeAreaProvider>
+      <Navigation />
+    </SafeAreaProvider>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -5,23 +5,27 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
-  Button,
 } from "react-native";
 //Themes
 import { ThemeProvider, createBox, createText } from "@shopify/restyle";
-import theme from "../themes/default";
+import theme, { palette } from "../themes/default";
 import Box from "../components/Box";
 import Text from "../components/Text";
-import CircleButton from "../components/CircleButton";
+import Button from "../components/Button";
+// import CircleButton from "../components/CircleButton";
+import CircleTimer from "../components/CircleTimer";
 import TextInput from "../components/TextInput";
 //System/Db
 import { setCurrentAct } from "../db/firebase";
 import firebase from "firebase/app";
+import ActHeader from "../components/ActHeader";
+import { SafeAreaView } from "react-native-safe-area-context";
 require("@firebase/database");
 
 export default function HomeScr() {
   var [activityLabelInput, updateActivityLabel] = React.useState("");
   var [currentAct, updateAct] = React.useState("");
+  var [timer, setTimer] = React.useState("14m 15s");
 
   const getAct = () => {
     console.log("Fetching current act...");
@@ -97,49 +101,54 @@ export default function HomeScr() {
     );
   } else {
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
+      
         <ThemeProvider theme={theme}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Box
               key="mainContainer"
               backgroundColor="mainBackground"
               flexGrow={1}
-              justifyContent="space-around"
-              alignItems="center"
+              justifyContent="space-between"
+              paddingVertical="s"
             >
-              <Box
-                justifyContent="center"
-                alignItems="center"
-                paddingVertical="m"
-              >
-                <Text>Current act:</Text>
-                <Text>{currentAct}</Text>
-                <Text>Current date: {date}</Text>
-                {/* <Button title="debug" onPress={debug} /> */}
+              <Box justifyContent="center" alignItems="center">
+                <ActHeader actName={currentAct} />
               </Box>
-              <Box justifyContent="center" alignItems="center" height="40%">
-                <CircleButton
+              <Box justifyContent="center" alignItems="center">
+                <CircleTimer
                   backgroundColor="buttonColor"
                   radius={buttonSize}
-                  onPress={update}
-                  label="Act!"
+                  label={timer}
                 />
               </Box>
-              <Box width="100%" alignItems="center">
-                <TextInput
-                  onChangeText={onChangeText}
-                  value={activityLabelInput}
-                  placeholder="Placeholder"
-                  multiline
-                />
-              </Box>
+              <SafeAreaView>
+                <Box alignItems="center" justifyContent="center">
+                  <Box
+                    flexGrow={1}
+                    justifyContent="center"
+                    alignItems="center"
+                    maxWidth="90%"
+                    flexDirection="row"
+                  >
+                    <TextInput
+                      onChangeText={onChangeText}
+                      value={activityLabelInput}
+                      placeholder="Placeholder"
+                      multiline
+                      maxWidth="65%"
+                    />
+                    <Button
+                      label="Act!"
+                      onPress={update}
+                      flexGrow={1}
+                      height="100%"
+                    />
+                  </Box>
+                </Box>
+              </SafeAreaView>
             </Box>
           </TouchableWithoutFeedback>
         </ThemeProvider>
-      </KeyboardAvoidingView>
     );
   }
 }
